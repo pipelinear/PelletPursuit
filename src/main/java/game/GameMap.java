@@ -170,20 +170,22 @@ public class GameMap {
     }
 
     public Tile getTile(int col, int row) {
-        if (row < 0 || row >= rows || col < 0 || col >= cols) return Tile.W; // TODO: replace with isOutOfGrid()
+        //if (row < 0 || row >= rows || col < 0 || col >= cols) return Tile.W; // TODO: replace with isOutOfGrid()
+     if (isOutOfGrid(col, row)) return Tile.W; //THIS IS THE UPDATED VERSION
         return state[row][col];
     }
 
     public boolean isOutOfGrid(int col, int row) {
         // TODO (Phase 1): Return true if (col, row) is outside the grid.
         // The grid has 'cols' columns (0 to cols-1) and 'rows' rows (0 to rows-1).
-        return false; // placeholder — replace this
+        return col < 0 || col >= cols || row < 0 || row >= rows;
+      //  return false; // placeholder — replace this
     }
 
     public boolean isWall(int col, int row) {
         // TODO (Phase 1): Return true if the tile at (col, row) is a wall.
         // Use getTile(col, row) — one line is enough.
-        return false; // placeholder — replace this
+        return getTile(col, row) == Tile.W; // placeholder — replace this
     }
 
     // Returns 0 if nothing eaten, 10 for dot, 50 for power pellet
@@ -192,7 +194,22 @@ public class GameMap {
         // and return its point value. If the tile is empty, return 0.
         // Removing a dot means replacing it with Tile.E and updating dotsRemaining.
         // Note: state is indexed [row][col], not [col][row].
-        return 0; // placeholder — replace this
+        if (isOutOfGrid(col, row)) return 0;
+
+        Tile t = state[row][col];
+        if (t == Tile.D) {
+            state[row][col] = Tile.E;
+            dotsRemaining--;
+            return 10;
+        } else if (t == Tile.P) {
+            state[row][col] = Tile.E;
+            dotsRemaining--;
+            return 50;
+        }
+
+        return 0;
+    }
+
     }
 
     public boolean isPowerPellet(int col, int row) {
@@ -212,9 +229,36 @@ public class GameMap {
         draw(gc, Color.web("#888800")); // change this hex code to pick your wall color
     }
 
-    public void draw(GraphicsContext gc, Color wallColor) {
-        gc.setFill(Color.BLACK);
-        gc.fillRect(0, 0, width, height);
+    public void draw(GraphicsContext gc, Color wallColor) { //resolution
+   gc.setFill(Color.BLACK);
+   gc.fillRect(0, 0, width, height);
+
+   for (int r = 0; r < rows; r++) { //outer loop
+    for (int c = 0; c < cols; c++) { //inner loop
+        double px = c * TILE; //turns the grid coodinates into pixel coordinates. - pixels x display
+        double py = r * TILE; //ditto pixels y display
+        Tile t = state[r][c];
+        switch (t) {
+            case W:
+                gc.setFill(wallColor);
+                gc.fillRoundRect(px + 1, py + 1, TILE - 2, TILE - 2, 6, 6);
+                break;
+            case D:
+                double cx = px + TILE / 2.0,  cy = py + TILE / 2.0;
+                gc.setFill(dotColor);
+                gc.fillOval(cx - 3, cy - 3, 6, 6);
+                break;
+            case P:
+                double cx = px + TILE / 2.0,  cy = py + TILE / 2.0;
+                gc.setFill(Color.WHITE);
+                gc.fillOval(cx - 7, cy - 7, 14, 14);
+                break;
+            case E:
+                // nothing to draw, the black background shows through
+                break;
+        }
+    }
+   }
 
         // TODO (Phase 1): Loop over every row r (0..rows-1) and every col c (0..cols-1).
         // Inside the loop:
