@@ -90,3 +90,5 @@ https://sbhs-computer-science-academy.github.io/PelletPursuit/docs/
 If IntelliJ or Maven gives you trouble:
 
 https://sbhs-computer-science-academy.github.io/PelletPursuit/docs/Troubleshooting
+
+gotta fix rthis buddy
