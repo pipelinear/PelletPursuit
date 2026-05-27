@@ -92,3 +92,5 @@ If IntelliJ or Maven gives you trouble:
 https://sbhs-computer-science-academy.github.io/PelletPursuit/docs/Troubleshooting
 
 gotta fix rthis buddy
+
+gotta fix rthis buddy 2
