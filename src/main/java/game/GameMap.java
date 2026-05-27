@@ -238,24 +238,19 @@ public class GameMap {
         double px = c * TILE; //turns the grid coodinates into pixel coordinates. - pixels x display
         double py = r * TILE; //ditto pixels y display
         Tile t = state[r][c];
-        switch (t) {
-            case W:
-                gc.setFill(wallColor);
-                gc.fillRoundRect(px + 1, py + 1, TILE - 2, TILE - 2, 6, 6);
-                break;
-            case D:
-                double cx = px + TILE / 2.0,  cy = py + TILE / 2.0;
-                gc.setFill(dotColor);
-                gc.fillOval(cx - 3, cy - 3, 6, 6);
-                break;
-            case P:
-                double cx = px + TILE / 2.0,  cy = py + TILE / 2.0;
-                gc.setFill(Color.WHITE);
-                gc.fillOval(cx - 7, cy - 7, 14, 14);
-                break;
-            case E:
-                // nothing to draw, the black background shows through
-                break;
+        if (t == W) {
+            gc.setFill(wallColor);
+            gc.fillRoundRect(px + 1, py + 1, TILE - 2, TILE - 2, 6, 6);
+        } else if (t == D) {
+            double cx = px + TILE / 2.0,  cy = py + TILE / 2.0;
+            gc.setFill(dotColor);
+            gc.fillOval(cx - 3, cy - 3, 6, 6);
+        } else if (t == P) {
+            double cx = px + TILE / 2.0,  cy = py + TILE / 2.0;
+            gc.setFill(Color.WHITE);
+            gc.fillOval(cx - 7, cy - 7, 14, 14);
+        } else if (t == E) {
+            // nothing to draw, the black background shows through
         }
     }
    }

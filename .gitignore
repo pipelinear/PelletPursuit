@@ -1,0 +1,18 @@
+# macOS junk
+.DS_Store
+**/.DS_Store
+
+# IntelliJ / IDEA local files
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/usage.statistics.xml
+.idea/dictionaries/
+*.iml
+
+# Java build output
+target/
+out/
+*.class
+
+# Logs
+*.log
